@@ -2,6 +2,7 @@ const express=require('express');
 const users=require('./MOCK_DATA.json');
 
 const app=express();
+app.use(express.urlencoded({extended:false}));
 
 app.get("/users",(req,res)=>{
     const html=`
@@ -43,6 +44,9 @@ app.route('/api/users/:id')
 // });
 
 app.post('/api/users/',(req,res)=>{
+    const body =req.body;
+    console.log(body);
+    
     //todo:create user route
     return res.json({status:"pending"});
 });
