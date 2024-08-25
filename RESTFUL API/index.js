@@ -4,6 +4,21 @@ const users=require('./MOCK_DATA.json');
 const app=express();
 app.use(express.urlencoded({extended:false}));
 
+
+app.use((req,res,next)=>{
+ console.log("hello from middleware")
+
+next();
+
+
+})
+
+app.use((req,res,next)=>{
+ console.log("hey")
+ res.send("hello from middleware 2")
+
+})
+
 app.get("/users",(req,res)=>{
     const html=`
     <ul>
