@@ -1,12 +1,16 @@
 const express=require('express');
 const users=require('./MOCK_DATA.json');
+const fs=require('fs')
 
 const app=express();
 app.use(express.urlencoded({extended:false}));
 
 
 app.use((req,res,next)=>{
- console.log("hello from middleware")
+ console.log("hello from middleware 1")
+ fs.appendFile('log.txt',`\n${Date.now()}: ${req.method}:${req.path}`,(err,data)=>{
+    next();})
+ req.myUserName="balakrishna";
 
 next();
 
@@ -15,8 +19,8 @@ next();
 
 app.use((req,res,next)=>{
  console.log("hey")
- res.send("hello from middleware 2")
-
+ console.log("hello from middleware 2", req.myUserName)
+    res.send("Hello world")
 })
 
 app.get("/users",(req,res)=>{
@@ -30,6 +34,9 @@ app.get("/users",(req,res)=>{
 })
 
 app.get("/api/users",(req,res)=>{
+    // res.setHeader("myName","Balakrishna")
+    console.log(req.headers)
+
     return res.json(users);
 });
 
